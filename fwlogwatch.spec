@@ -14,6 +14,7 @@ Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-config.patch
 URL:		http://cert.uni-stuttgart.de/projects/fwlogwatch/
 BuildRequires:	flex
+BuildRequires:	zlib-devel
 Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -50,7 +51,7 @@ zapobiegawcze.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
+install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
 
 %{__make} install install-config \
