@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://www.kyb.uni-stuttgart.de/boris/sw/%{name}-%{version}.tar.bz2
+# Source0-md5:	3b10ecdf5ed00b2828f049827d070001
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-DESTDIR.patch
