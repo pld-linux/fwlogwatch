@@ -14,7 +14,10 @@ Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-config.patch
 URL:		http://cert.uni-stuttgart.de/projects/fwlogwatch/
 BuildRequires:	flex
+Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_sysconfdir		/etc/%{name}
 
 %description
 fwlogwatch produces ipchains, netfilter/iptables, ipfilter, Cisco IOS
@@ -43,21 +46,21 @@ zapobiegawcze.
 %build
 %{__make} \
 	CC="%{__cc}" OPT="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
-	SYSCONFDIR="%{_sysconfdir}/%{name}"
+	SYSCONFDIR="%{_sysconfdir}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{%{name},rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
+	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
 
 %{__make} install install-config \
 	DESTDIR=$RPM_BUILD_ROOT \
-	SYSCONFDIR="%{_sysconfdir}/%{name}" \
+	SYSCONFDIR="%{_sysconfdir}" \
 	PREFIX="%{_prefix}" \
 	MANDIR="%{_mandir}"
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/%{name}
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 gzip -9nf contrib/fw* AUTHORS CREDITS ChangeLog README
 
@@ -70,10 +73,12 @@ else
 fi
 
 %preun
-if [ "$1" = "0" -a -f %{_var}/lock/subsys/%{name} ]; then
-        /etc/rc.d/init.d/%{name} stop 1>&2
+if [ "$1" = "0" ]; then
+	if [ -f %{_var}/lock/subsys/%{name} ]; then
+	        /etc/rc.d/init.d/%{name} stop 1>&2
+	fi
+	/sbin/chkconfig --del %{name}
 fi
-/sbin/chkconfig --del %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -81,10 +86,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz */*.gz
-%attr(700,root,root) %dir %{_sysconfdir}/%{name}
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}/*.*
-%attr(750,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}/fwlw_*
+%attr(700,root,root) %dir %{_sysconfdir}
+%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.*
+%attr(750,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}//fwlw_*
 %attr(755,root,root) %{_sbindir}/*
-%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/%{name}
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/%{name}
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/%{name}
 %{_mandir}/man?/*
