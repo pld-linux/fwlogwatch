@@ -14,7 +14,7 @@ URL:		http://cert.uni-stuttgart.de/projects/fwlogwatch/
 BuildRequires:	flex
 BuildRequires:	zlib-devel
 Prereq:		rc-scripts
-Prereq:		/sbin/chkconfig
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir		/etc/%{name}
@@ -62,8 +62,6 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
-gzip -9nf contrib/fw* AUTHORS CREDITS ChangeLog README
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -85,10 +83,10 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz */*.gz
+%doc contrib/fw* AUTHORS CREDITS ChangeLog README
 %attr(700,root,root) %dir %{_sysconfdir}
 %attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.*
-%attr(750,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}//fwlw_*
+%attr(750,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fwlw_*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/%{name}
