@@ -2,7 +2,7 @@ Summary:	Firewall log analyzer, report generator and realtime response agent
 Summary(pl):	Analizator logów firewalla, generator raportów i agent natychmiastowej odpowiedzi
 Name:		fwlogwatch
 Version:	0.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -16,6 +16,7 @@ URL:		http://cert.uni-stuttgart.de/projects/fwlogwatch/
 BuildRequires:	flex
 BuildRequires:	zlib-devel
 Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir		/etc/%{name}
@@ -65,6 +66,9 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 gzip -9nf contrib/fw* AUTHORS CREDITS ChangeLog README
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 /sbin/chkconfig --add %{name}
 if [ -f %{_var}/lock/subsys/%{name} ]; then
@@ -80,9 +84,6 @@ if [ "$1" = "0" ]; then
 	fi
 	/sbin/chkconfig --del %{name}
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
