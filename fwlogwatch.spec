@@ -1,8 +1,8 @@
 Summary:	Firewall log analyzer, report generator and realtime response agent
 Summary(pl):	Analizator logów firewalla, generator raportów i agent natychmiastowej odpowiedzi
 Name:		fwlogwatch
-Version:	0.4
-Release:	2
+Version:	0.5.2
+Release:	1
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
