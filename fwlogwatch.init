@@ -3,8 +3,8 @@
 # fwlogwatchd	Firewall log analyzer
 #
 # chkconfig:	345 85 15
-# description:	Firewall log analyzer and raport generator tool#
-
+# description:	Firewall log analyzer and raport generator tool
+#
 # Source function library
 . /etc/rc.d/init.d/functions
 
