@@ -43,8 +43,9 @@ zapobiegawcze.
 
 %build
 %{__make} \
-	CC="%{__cc}" OPT="%{rpmcflags}" LDFLAGS="%{rpmldflags}" \
-	SYSCONFDIR="%{_sysconfdir}"
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -Wall" \
+	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -52,10 +53,6 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
 
 %{__make} install install-config \
-	DESTDIR=$RPM_BUILD_ROOT \
-	SYSCONFDIR="%{_sysconfdir}" \
-	PREFIX="%{_prefix}" \
-	MANDIR="%{_mandir}" \
 	INSTALL_DIR="$RPM_BUILD_ROOT/usr" \
 	CONF_DIR="$RPM_BUILD_ROOT/etc/fwlogwatch"
 
@@ -85,7 +82,7 @@ fi
 %defattr(644,root,root,755)
 %doc contrib/fw* AUTHORS CREDITS ChangeLog README
 %attr(700,root,root) %dir %{_sysconfdir}
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.*
+%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.config
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/%{name}
