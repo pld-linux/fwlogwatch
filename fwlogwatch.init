@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# fwlogwatchd	Firewall log analyzer
+#
+# chkconfig:	345 85 15
+# description:	Firewall log analyzer and raport generator tool#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/fwlogwatch ] && . /etc/sysconfig/fwlogwatch
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+        if [ ! -f /var/lock/subsys/fwlogwatch ]; then
+		msg_starting fwlogwatch
+		daemon fwlogwatch $FWLOGWATCH_OPTS
+	        RETVAL=$?
+    		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/fwlogwatch
+	else
+        	msg_Already_Running fwlogwatch
+	        exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+	if [ -f /var/lock/subsys/fwlogwatch ]; then
+                msg_stopping fwlogwatch
+                killproc fwlogwatch
+                rm -f /var/lock/subsys/fwlogwatch > /dev/null 2>&1
+        else
+		msg_Not_Running fwlogwatch
+	        exit 1
+	fi
+	;;
+  status)
+	status fwlogwatch
+	RETVAL=$?
+	exit $RETVAL
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  reload)
+	msg_reloading fwlogwatch
+	killproc fwlogwatch -HUP
+	RETVAL=$?
+	;;
+  *)
+	msg_Usage "$0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+

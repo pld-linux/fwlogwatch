@@ -1,0 +1,32 @@
+diff -urN fwlogwatch-0.4.org/fwlogwatch.config fwlogwatch-0.4/fwlogwatch.config
+--- fwlogwatch-0.4.org/fwlogwatch.config	Thu Aug 30 14:00:03 2001
++++ fwlogwatch-0.4/fwlogwatch.config	Thu Aug 30 15:20:44 2001
+@@ -24,7 +24,7 @@
+ # files (gzip) are supported.
+ # Command line option: -f <file>
+ #
+-#input	= 
++input	= /var/log/kernel
+ 
+ 
+ ### Evaluation options ###
+@@ -202,7 +202,7 @@
+ # Use 'realtime_response' to turn this mode on.
+ # Command line option: -R
+ #
+-#realtime_response
++realtime_response
+ 
+ # With the 'pidfile' option you can specify a file fwlogwatch will use to
+ # keep it's PID so it can receive signals from scripts.
+@@ -227,8 +227,8 @@
+ # respectively are specified here.
+ # Command line options: -A / -B
+ #
+-#notify
+-#respond
++notify
++respond
+ 
+ # Known hosts are those that will not be warned about or actions taken
+ # against, even if they match the alert/response criteria.
