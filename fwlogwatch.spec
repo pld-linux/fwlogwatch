@@ -1,19 +1,18 @@
 Summary:	Firewall log analyzer, report generator and realtime response agent
 Summary(pl):	Analizator logów firewalla, generator raportów i agent natychmiastowej odpowiedzi
 Name:		fwlogwatch
-Version:	0.5.2
+Version:	1.0
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://www.kybs.de/boris/sw/%{name}-%{version}.tar.bz2
-# Source0-md5:	5991712caa26f487170df4071dbaf15e
+# Source0-md5:	a0aa323568862e23fdbc6473ce6a01b5
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Patch0:		%{name}-DESTDIR.patch
-Patch1:		%{name}-config.patch
-URL:		http://cert.uni-stuttgart.de/projects/fwlogwatch/
+URL:		http://fwlogwatch.inside-security.de/
 BuildRequires:	flex
 BuildRequires:	zlib-devel
+BuildRequires:	m4
 Prereq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -41,8 +40,6 @@ zapobiegawcze.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 %{__make} \
@@ -58,7 +55,9 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	SYSCONFDIR="%{_sysconfdir}" \
 	PREFIX="%{_prefix}" \
-	MANDIR="%{_mandir}"
+	MANDIR="%{_mandir}" \
+	INSTALL_DIR="$RPM_BUILD_ROOT/usr" \
+	CONF_DIR="$RPM_BUILD_ROOT/etc/fwlogwatch"
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
@@ -87,7 +86,6 @@ fi
 %doc contrib/fw* AUTHORS CREDITS ChangeLog README
 %attr(700,root,root) %dir %{_sysconfdir}
 %attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.*
-%attr(750,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fwlw_*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/%{name}
