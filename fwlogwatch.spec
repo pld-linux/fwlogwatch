@@ -11,10 +11,10 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://fwlogwatch.inside-security.de/
 BuildRequires:	flex
-BuildRequires:	zlib-devel
 BuildRequires:	m4
-Prereq:		rc-scripts
+BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir		/etc/%{name}
@@ -82,8 +82,8 @@ fi
 %defattr(644,root,root,755)
 %doc contrib/fw* AUTHORS CREDITS ChangeLog README
 %attr(700,root,root) %dir %{_sysconfdir}
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.config
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.config
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/%{name}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %{_mandir}/man?/*
