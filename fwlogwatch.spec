@@ -1,12 +1,12 @@
 Summary:	Firewall log analyzer, report generator and realtime response agent
 Summary(pl):	Analizator logów firewalla, generator raportów i agent natychmiastowej odpowiedzi
 Name:		fwlogwatch
-Version:	1.0
+Version:	1.1
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://www.kybs.de/boris/sw/%{name}-%{version}.tar.bz2
-# Source0-md5:	a0aa323568862e23fdbc6473ce6a01b5
+# Source0-md5:	266974c417a7b973d3e54b64f95e9536
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://fwlogwatch.inside-security.de/
@@ -53,8 +53,8 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
 
 %{__make} install install-config \
-	INSTALL_DIR="$RPM_BUILD_ROOT/usr" \
-	CONF_DIR="$RPM_BUILD_ROOT/etc/fwlogwatch"
+	INSTALL_DIR="$RPM_BUILD_ROOT%{_usr}" \
+	CONF_DIR="$RPM_BUILD_ROOT%{_sysconfdir}"
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
@@ -82,7 +82,7 @@ fi
 %defattr(644,root,root,755)
 %doc contrib/fw* AUTHORS CREDITS ChangeLog README
 %attr(700,root,root) %dir %{_sysconfdir}
-%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.config
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
