@@ -1,5 +1,5 @@
 Summary:	Firewall log analyzer, report generator and realtime response agent
-Summary(pl):	Analizator logów firewalla, generator raportów i agent natychmiastowej odpowiedzi
+Summary(pl.UTF-8):   Analizator logÃ³w firewalla, generator raportÃ³w i agent natychmiastowej odpowiedzi
 Name:		fwlogwatch
 Version:	1.1
 Release:	1
@@ -28,14 +28,14 @@ incident reports from a template and send them to abuse contacts at
 offending sites or CERT coordination centers. Finally, it can also run
 as daemon and report anomalies or start countermeasures.
 
-%description -l pl
+%description -l pl.UTF-8
 fwlogwatch produkuje sumaryczne raporty w formacie tekstowym oraz HTML
 z informacjami dostarczanymi przez logi ipchains, netfilter/iptables,
 ipfilter, Cisco IOS oraz Cisco PIX. fwlogwatch ma wiele opcji
-pozwalaj±cych znajdowaæ okre¶lone wzorce w próbach po³±czeñ. Na
-podstawie tych danych mo¿e generowaæ raporty o incydentach i wysy³aæ
-je na adres abuse lub do centrów koordynacji CERT. Mo¿e on równie¿
-pracowaæ jako daemon i informowaæ o anomaliach oraz podejmowaæ kroki
+pozwalajÄ…cych znajdowaÄ‡ okreÅ›lone wzorce w prÃ³bach poÅ‚Ä…czeÅ„. Na
+podstawie tych danych moÅ¼e generowaÄ‡ raporty o incydentach i wysyÅ‚aÄ‡
+je na adres abuse lub do centrÃ³w koordynacji CERT. MoÅ¼e on rÃ³wnieÅ¼
+pracowaÄ‡ jako daemon i informowaÄ‡ o anomaliach oraz podejmowaÄ‡ kroki
 zapobiegawcze.
 
 %prep
