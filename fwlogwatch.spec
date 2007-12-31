@@ -9,6 +9,7 @@ Source0:	http://www.kybs.de/boris/sw/%{name}-%{version}.tar.bz2
 # Source0-md5:	266974c417a7b973d3e54b64f95e9536
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Patch0:		%{name}-paths.patch
 URL:		http://fwlogwatch.inside-security.de/
 BuildRequires:	flex
 BuildRequires:	m4
@@ -40,6 +41,7 @@ zapobiegawcze.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} \
@@ -63,7 +65,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add %{name}
 %service %{name} restart
 
 %preun
